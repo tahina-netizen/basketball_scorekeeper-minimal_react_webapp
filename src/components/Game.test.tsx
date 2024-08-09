@@ -1,4 +1,4 @@
-import {getAllByRole, render, screen } from '@testing-library/react'
+import {getAllByRole, getByRole, getByTestId, render, screen } from '@testing-library/react'
 import Game from "./Game";
 import userEvent from '@testing-library/user-event';
 
@@ -15,9 +15,6 @@ describe("Game default rendering", () => {
 
   it("should show three buttons (+1, +2 and +3) under each counter", () => {
     render(<Game />);
-
-    const awayCounter = screen.getByLabelText(/Away/i)
-    const homeCounter = screen.getByLabelText(/Home/i)
 
     const awayButtons = getAllByRole(getAwayScoreBox(), "button")
     const homeButtons = getAllByRole(getHomeScoreBox(), "button")
@@ -43,12 +40,19 @@ describe("Game (with interaction)", () => {
     const [plus1Button, plus2Button, plus3Button] = getAllByRole(getHomeScoreBox(), "button")
 
     userEvent.click(plus1Button)
+    const [okButton1, _] = getConfirmationButtons("home", "+1")
+    userEvent.click(okButton1)
     expect(homeCounter).toHaveValue("1")
 
     userEvent.click(plus2Button)
+    const [okButton2, __] = getConfirmationButtons("home", "+2")
+    userEvent.click(okButton2)
     expect(homeCounter).toHaveValue("3")
 
+    
     userEvent.click(plus3Button)
+    const [okButton3, ___] = getConfirmationButtons("home", "+3")
+    userEvent.click(okButton3)
     expect(homeCounter).toHaveValue("6")
   })
 
@@ -58,13 +62,20 @@ describe("Game (with interaction)", () => {
     const awayCounter = screen.getByLabelText(/Away/i)
     const [plus1Button, plus2Button, plus3Button] = getAllByRole(getAwayScoreBox(), "button")
     
-    userEvent.click(plus1Button) 
+    userEvent.click(plus1Button)
+    const [okButton1, _] = getConfirmationButtons("away", "+1")
+    userEvent.click(okButton1)
     expect(awayCounter).toHaveValue("1")
 
     userEvent.click(plus2Button)
+    const [okButton2, __] = getConfirmationButtons("away", "+2")
+    userEvent.click(okButton2)
     expect(awayCounter).toHaveValue("3")
 
+    
     userEvent.click(plus3Button)
+    const [okButton3, ___] = getConfirmationButtons("away", "+3")
+    userEvent.click(okButton3)
     expect(awayCounter).toHaveValue("6")
   }) 
 })
@@ -75,4 +86,13 @@ function getAwayScoreBox() {
 
 function getHomeScoreBox() {
   return screen.getByTestId("scorebox-home")
+}
+
+function getConfirmationButtons(awayOrHome: "away" | "home", mainButtonLabel: string) {
+  const counterBox = screen.getByTestId(`scorebox-${awayOrHome}`)
+  const wrapper = getByTestId(counterBox, `submit-shoot-attempt-wrapper_${mainButtonLabel}`)
+  const [_, validateButton, invalidateButton] = getAllByRole(wrapper, "button")
+  expect(validateButton).toHaveTextContent("Ok")
+  expect(invalidateButton).toHaveTextContent("Missed")
+  return [validateButton, invalidateButton]
 }

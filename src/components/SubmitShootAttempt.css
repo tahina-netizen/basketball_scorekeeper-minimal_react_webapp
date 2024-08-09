@@ -1,0 +1,15 @@
+.button-validate {
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
+
+.button-invalidate {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
