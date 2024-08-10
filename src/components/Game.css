@@ -1,7 +1,16 @@
 .game {
     width: 80%;
+}
+
+
+#two-counters {
     float: left;
     display: flex;
     justify-content: center;
 }
 
+
+#two-team-stats {
+    display: inline-block;
+    justify-content: center;
+}

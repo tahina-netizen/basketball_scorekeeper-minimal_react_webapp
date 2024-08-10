@@ -19,6 +19,7 @@ export default function ScoreCounter({name, score, submitAttempt}: {name: string
       <SubmitShootAttempt label="+1" submitAttempt={submitAttemptWithPoint(1)}></SubmitShootAttempt>
       <SubmitShootAttempt label="+2" submitAttempt={submitAttemptWithPoint(2)}></SubmitShootAttempt>
       <SubmitShootAttempt label="+3" submitAttempt={submitAttemptWithPoint(3)}></SubmitShootAttempt>
+      
     </div>
   )
 }

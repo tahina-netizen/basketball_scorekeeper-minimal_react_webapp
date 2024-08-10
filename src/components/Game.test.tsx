@@ -1,4 +1,4 @@
-import {getAllByRole, getByRole, getByTestId, render, screen } from '@testing-library/react'
+import {getAllByRole, getByLabelText, getByTestId, getByText, render, screen } from '@testing-library/react'
 import Game from "./Game";
 import userEvent from '@testing-library/user-event';
 
@@ -29,6 +29,36 @@ describe("Game default rendering", () => {
     homeButtons.forEach((button, index) => {
       expect(button).toHaveTextContent(expectedButtonLabels[index])
     })    
+  })
+
+  it("should show a box of away team with title and initialized stats", () => {
+    render(<Game/>)
+
+    const awayStatBox = screen.getByTestId("team-stats-box_away")
+    const title = getByText(awayStatBox, /Away team stats/)
+    const fieldGoal = getByLabelText(awayStatBox, "FG")
+    const threePointFieldGoal = getByLabelText(awayStatBox, "3-pt FG")
+    const freeThrowFieldGoal = getByLabelText(awayStatBox, "FT FG")
+
+    expect(title).toBeVisible()
+    expect(fieldGoal).toHaveValue("N/A")
+    expect(threePointFieldGoal).toHaveValue("N/A")
+    expect(freeThrowFieldGoal).toHaveValue("N/A")
+  })
+
+  it("should show a box of home team with title and initialized stats", () => {
+    render(<Game/>)
+
+    const homeStateBox = screen.getByTestId("team-stats-box_home")
+    const title = getByText(homeStateBox, /Home team stats/)
+    const fieldGoal = getByLabelText(homeStateBox, "FG")
+    const threePointFieldGoal = getByLabelText(homeStateBox, "3-pt FG")
+    const freeThrowFieldGoal = getByLabelText(homeStateBox, "FT FG")
+
+    expect(title).toBeVisible()
+    expect(fieldGoal).toHaveValue("N/A")
+    expect(threePointFieldGoal).toHaveValue("N/A")
+    expect(freeThrowFieldGoal).toHaveValue("N/A")
   })
 })
 

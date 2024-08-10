@@ -2,6 +2,7 @@ import { useState } from "react";
 import ScoreCounter from "./ScoreCounter";
 import './Game.css'
 import ShootAttempt from "../core/ShootAttempt";
+import TeamStats from "./TeamStats";
 
 export default function Game() {
   const [awayScore, setAwayScore] = useState(0)
@@ -26,8 +27,14 @@ export default function Game() {
   return (
     <>
       <div className="game">
-        <ScoreCounter name="Away" score={awayScore} submitAttempt={submitAwayShootAttempt}></ScoreCounter>
-        <ScoreCounter name="Home" score={homeScore} submitAttempt={submitHomeShootAttempt}></ScoreCounter>
+        <div id="two-counters">
+          <ScoreCounter name="Away" score={awayScore} submitAttempt={submitAwayShootAttempt}></ScoreCounter>
+          <ScoreCounter name="Home" score={homeScore} submitAttempt={submitHomeShootAttempt}></ScoreCounter>
+        </div>
+        <div id="two-team-stats">
+          <TeamStats teamLabel="Away" teamAttempts={[]}></TeamStats>
+          <TeamStats teamLabel="Home" teamAttempts={[]}></TeamStats>
+        </div>
       </div>
     </>
   )
